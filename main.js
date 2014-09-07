@@ -26,9 +26,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 	var doSetup = function(evt) {
-		if (evt) {
-			evt.preventDefault();
-		}
+		evt.preventDefault();
 
 		console.log('storing...');
 		storage.placa = document.querySelector('#placa').value;
@@ -62,6 +60,8 @@ document.addEventListener('DOMContentLoaded', function(){
 			warn.innerText = result.warn;
 			clase = 'warn';
 			warn.className = '';
+		} else {
+			warn.className = 'hidden';
 		}
 		resultText.className = clase
 		resultText.innerText = result.circula ? 'Sí' : 'No';
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		setup.classList.remove('hidden');
 		result.classList.add('hidden');
 	};
-	document.querySelector('#reset').addEventListener('mouseup', showSetup);
+	document.querySelector('#reset').addEventListener('mousedown', showSetup);
 	document.querySelector('#reset').addEventListener('touchend', showSetup);
 	//document.querySelector('#guardar-placa').addEventListener('mouseup', doSetup);
 
