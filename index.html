@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hoy chance circulo</title>
+
+	<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700,300italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+<body>
+
+	<main>
+		<h1>¿Circulo hoy en DF?</h1>
+
+		<section id="setup" class="hidden">
+			<p>¿Cuales son los dígitos de tu placa?</p>
+			<input id="placa" type="number" min="0" max="9999" step="1" placeholder="4242" />
+			<p>¿Qué número de holograma tienes?</p>
+
+			<ul id="hologramas">
+				<li class="holograma">
+					<label>
+						<input type="radio" name="holograma" value="0" />
+						Cero
+					</label>
+				</li>
+				<li class="holograma">
+					<label>
+						<input type="radio" name="holograma" value="1" />
+						1
+					</label>
+				</li>
+				<li class="holograma">
+					<label>
+						<input type="radio" name="holograma" value="2" />
+						2
+					</label>
+				</li>
+			</ul>
+			
+			<button id="guardar-placa">Listo</button>
+		</section>
+
+		<section id="result" class="hidden">
+			<h2 id="hoy-circulo"></h2>
+			<span id="warn"></span>
+			<p id="razon"></p>
+			<a id="reset" href="#setup">Cambiar datos</a>
+		</section>
+	</main>
+
+
+	<script src="lib/programa.js"></script>
+	<script src="lib/auto.js"></script>
+	<script src="lib/circula.js"></script>
+	<script src="main.js"></script>
+
+</body>
+</html>
