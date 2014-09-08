@@ -1,6 +1,7 @@
 CACHE MANIFEST
-# v0.0.4
+# v0.0.5
 
+CACHE:
 #JS
 lib/auto.js
 lib/circula.js
@@ -12,10 +13,11 @@ index.html
 
 #CSS
 main.css
+http://fonts.googleapis.com/css?family=Ubuntu:400,700,300italic
 
 #IMG
 img/bg.jpg
 img/pato.svg
 
-NETWORK
+NETWORK:
 *
