@@ -54,14 +54,25 @@ input[type=number] {
 	margin: 0;
 	padding: 0;
 	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
 	-webkit-flex-direction: row;
+	-moz-flex-direction: row;
+	-ms-flex-direction: row;
+	-o-flex-direction: row;
+	flex-direction: row;
 }
 .holograma {
 	display: block;
 	list-style: none;
 	-webkit-flex: 1 1 auto;
+	-moz-flex: 1 1 auto;
+	-o-flex: 1 1 auto;
+	-ms-flex: 1 1 auto;
+	flex: 1 1 auto;
 	text-align: center;
-	
 }
 
 .holograma label {
