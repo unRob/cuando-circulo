@@ -118,13 +118,14 @@ document.addEventListener('DOMContentLoaded', function(){
 		Actions.Reset();
 	}
 
-	document.querySelector('#guardar-placa').addEventListener('mouseup', Actions.Setup);
-	document.querySelector('#guardar-placa').addEventListener('touchend', Actions.Setup);
+	document.querySelector('#guardar-datos').addEventListener('mouseup', Actions.Setup);
+	document.querySelector('#guardar-datos').addEventListener('touchend', Actions.Setup);
 	document.querySelector('#reset').addEventListener('mousedown', Actions.Reset);
 	document.querySelector('#reset').addEventListener('touchend', Actions.Reset);
 
 	var doFlip = function(evt){
 		evt.preventDefault();
+		evt.stopPropagation();
 		var card = document.querySelector('#card');
 		card.classList.toggle('flipped');
 		if (card.classList.contains('flipped')) {
@@ -133,10 +134,11 @@ document.addEventListener('DOMContentLoaded', function(){
 				appVersion: VERSION
 			});
 		}
+		return false;
 	};
 
 	[].forEach.call(document.querySelectorAll('.flippy'), function(el) {
-		el.addEventListener('mouseup', doFlip);
+		el.addEventListener('click', doFlip, false);
 	});
 
 });
