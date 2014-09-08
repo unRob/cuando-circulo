@@ -1,114 +1,126 @@
-var dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+/*jshint expr:true */
+var VERSION = '0.0.3';
 
-var proxima_verificacion = function(placa) {
-	var ultimo = lib.ultimo_digito(placa);
-	var esteMes = new Date().getMonth();
-	var verifica = pvv.terminaciones[ultimo].verifica;
+var track = function(type, data){
+	if (typeof ga === 'undefined') {
+		return true;
+	}
 
-	// if (verifica.indexOf(esteMes) > -1) {
-
-	// } else {
-	// 	verifica.forEach(function(mes){
-
-	// 	});
-	// }
+	ga('send', type, data);
 };
+
+if (VERSION = 1) {
+
+}
 
 document.addEventListener('DOMContentLoaded', function(){
 
 	var storage = window.localStorage;
-	//dom
-	var setup = document.querySelector('#setup');
-	var result = document.querySelector('#result');
-	var resultText = document.querySelector('#hoy-circulo');
-	var resultRazon = document.querySelector('#razon');
-	var warn = document.querySelector('#warn');
 
-
-	var doSetup = function(evt) {
-		evt.preventDefault();
-		var domPlaca = document.querySelector('#placa');
-		var placa = domPlaca.value.replace(/\D/g, '+');
-		var holograma = (function(els){
-			var num;
-			[].forEach.call(els, function(el){
-				if (el.checked) {
-					num = el.value;
+	var _show = function(el) {el = el.container || el; el.classList.remove('hidden');};
+	var _hide = function(el) {el = el.container || el; el.classList.add('hidden');};
+	var DOM = {
+		setup: {
+			container: document.querySelector('#setup'),
+			placa: document.querySelector('#placa'),
+			hologramas: document.getElementsByName('holograma'),
+			valueFor: function(el) {
+				if (el === 'placa') {
+					return DOM.setup.placa.value.replace(/\D/g, '+');
+				} else if (el === 'holograma') {
+					return (function(els){
+						var num;
+						[].forEach.call(els, function(el){
+							if (el.checked) {
+								num = el.value;
+							}
+						});
+						return parseInt(num, 10);
+					})(DOM.setup.hologramas);
 				}
+			}
+		},
+		result: {
+			container: document.querySelector('#result'),
+			header: document.querySelector('#hoy-circulo'),
+			razon: document.querySelector('#razon'),
+			warn: document.querySelector('#warn')
+		}
+	};
+
+	var Actions = {
+		Reset: function(evt) {
+			evt && evt.preventDefault();
+			_show(DOM.setup);
+			_hide(DOM.result);
+			track('screenView', {
+				screenName: 'resultados',
+				appVersion: VERSION
 			});
-			return parseInt(num, 10);
-		})(document.getElementsByName('holograma'));
+		},
+		Setup: function(evt) {
+			evt && evt.preventDefault();
+			var placa = DOM.setup.valueFor('placa');
+			var holograma = DOM.setup.valueFor('holograma');
 
-		if (!placa || placa.length < 3 || placa.length > 4) {
+			if (!placa || placa.length < 3 || placa.length > 4) {
+				
+				alert("Parece que no has introducido correctamente los datos de tu placa :(");
+				DOM.setup.placa.focus();
+				return;
+			}
+
+			if ([0,1,2].indexOf(holograma) < 0) {
+				alert("Es necesario que elijas el holograma de tu vehículo");
+				return;
+			}
+
+			console.log('storing...');
+			storage.placa = placa;
+			storage.holograma = holograma;
+			Actions.Result();
+		},
+		Result: function(){
+			_show(DOM.result);
+			_hide(DOM.setup);
+			var d = new Date();
+			var mi_auto = new Auto(storage.placa, storage.holograma);
+			var clase;
+
+			var res = Circula(mi_auto, d);
+
+			clase = res.circula ? 'yay' : 'nay';
+			if (res.warn) {
+				DOM.result.warn.innerText = res.warn;
+				clase = 'warn';
+				_show(DOM.result.warn);
+			} else {
+				_hide(DOM.result.warn);
+			}
+			DOM.result.header.className = clase;
+			DOM.result.header.innerText = res.circula ? 'Sí' : 'No';
+			DOM.result.razon.innerText = res.razon;
 			
-			alert("Parece que no has introducido correctamente los datos de tu placa :(");
-			domPlaca.focus();
-			return;
+			track('screenView', {
+				screenName: 'resultados',
+				appVersion: VERSION
+			});
 		}
-
-		if ([0,1,2].indexOf(holograma) < 0) {
-			alert("Es necesario que elijas el holograma de tu vehículo");
-			return;
-		}
-
-		console.log('storing...');
-		storage.placa = placa;
-		storage.holograma = holograma;
-
-
-		result.classList.remove('hidden');
-		setup.classList.add('hidden');
-		showResult();
 	};
 
-	var showResult = function(){
 
-		var d = new Date();
-		//var d = new Date(1898,10,21,16);
-		var mi_auto = new Auto(storage.placa, storage.holograma);
-		var clase;
 
-		var result = Circula(mi_auto, d);
-
-		clase = result.circula ? 'yay' : 'nay';
-		if (result.warn) {
-			warn.innerText = result.warn;
-			clase = 'warn';
-			warn.className = '';
-		} else {
-			warn.className = 'hidden';
-		}
-		resultText.className = clase;
-		resultText.innerText = result.circula ? 'Sí' : 'No';
-		resultRazon.innerText = result.razon;
-		
-	};
-
-	if (storage.placa) {
-		result.classList.remove('hidden');
-		showResult();
+	if (storage.placa && storage.holograma) {
+		DOM.setup.placa.value = storage.placa;
+		DOM.setup.hologramas[parseInt(storage.holograma, 10)].checked = 'checked';
+		Actions.Result();
 	} else {
-		setup.classList.remove('hidden');
+		Actions.Reset();
 	}
 
-	if (storage.placa) {
-		document.querySelector('#placa').value = storage.placa;
-	}
-
-	if (storage.holograma) {
-		document.querySelector('input[value="'+storage.holograma+'"]').checked = 'checked';
-	}
-
-	document.querySelector('#guardar-placa').addEventListener('mouseup', doSetup);
-	document.querySelector('#guardar-placa').addEventListener('touchend', doSetup);
-
-	var showSetup = function(evt) {
-		evt.preventDefault();
-		setup.classList.remove('hidden');
-		result.classList.add('hidden');
-	};
-	document.querySelector('#reset').addEventListener('mousedown', showSetup);
-	document.querySelector('#reset').addEventListener('touchend', showSetup);
-	//document.querySelector('#guardar-placa').addEventListener('mouseup', doSetup);
+	document.querySelector('#guardar-placa').addEventListener('mouseup', Actions.Setup);
+	document.querySelector('#guardar-placa').addEventListener('touchend', Actions.Setup);
+	document.querySelector('#reset').addEventListener('mousedown', Actions.Reset);
+	document.querySelector('#reset').addEventListener('touchend', Actions.Reset);
 
 });
