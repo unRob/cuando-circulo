@@ -1,7 +1,6 @@
 CACHE MANIFEST
-# v0.0.5
+# v0.0.2
 
-CACHE:
 #JS
 lib/auto.js
 lib/circula.js
@@ -9,7 +8,7 @@ lib/localizador.js
 lib/programa.js
 
 #HTML
-index.html
+#index.html
 
 #CSS
 main.css
