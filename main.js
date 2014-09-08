@@ -5,13 +5,13 @@ var proxima_verificacion = function(placa) {
 	var esteMes = new Date().getMonth();
 	var verifica = pvv.terminaciones[ultimo].verifica;
 
-	if (verifica.indexOf(esteMes) > -1) {
+	// if (verifica.indexOf(esteMes) > -1) {
 
-	} else {
-		verifica.forEach(function(mes){
+	// } else {
+	// 	verifica.forEach(function(mes){
 
-		})
-	}
+	// 	});
+	// }
 };
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -22,15 +22,14 @@ document.addEventListener('DOMContentLoaded', function(){
 	var result = document.querySelector('#result');
 	var resultText = document.querySelector('#hoy-circulo');
 	var resultRazon = document.querySelector('#razon');
-	var warn = document.querySelector('#warn')
+	var warn = document.querySelector('#warn');
 
 
 	var doSetup = function(evt) {
 		evt.preventDefault();
-
-		console.log('storing...');
-		storage.placa = document.querySelector('#placa').value;
-		storage.holograma = (function(els){
+		var domPlaca = document.querySelector('#placa');
+		var placa = domPlaca.value.replace(/\D/g, '+');
+		var holograma = (function(els){
 			var num;
 			[].forEach.call(els, function(el){
 				if (el.checked) {
@@ -39,6 +38,22 @@ document.addEventListener('DOMContentLoaded', function(){
 			});
 			return parseInt(num, 10);
 		})(document.getElementsByName('holograma'));
+
+		if (!placa || placa.length < 3 || placa.length > 4) {
+			
+			alert("Parece que no has introducido correctamente los datos de tu placa :(");
+			domPlaca.focus();
+			return;
+		}
+
+		if (!holograma) {
+			alert("Es necesario que elijas el holograma de tu vehículo");
+			return;
+		}
+
+		console.log('storing...');
+		storage.placa = placa;
+		storage.holograma = holograma;
 
 
 		result.classList.remove('hidden');
@@ -55,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		var result = Circula(mi_auto, d);
 
-		clase = result.circula ? 'yay' : 'nay'
+		clase = result.circula ? 'yay' : 'nay';
 		if (result.warn) {
 			warn.innerText = result.warn;
 			clase = 'warn';
@@ -63,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		} else {
 			warn.className = 'hidden';
 		}
-		resultText.className = clase
+		resultText.className = clase;
 		resultText.innerText = result.circula ? 'Sí' : 'No';
 		resultRazon.innerText = result.razon;
 		
