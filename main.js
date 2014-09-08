@@ -123,7 +123,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	document.querySelector('#reset').addEventListener('mousedown', Actions.Reset);
 	document.querySelector('#reset').addEventListener('touchend', Actions.Reset);
 
-	var doFlip = function(){
+	var doFlip = function(evt){
+		evt.preventDefault();
 		var card = document.querySelector('#card');
 		card.classList.toggle('flipped');
 		if (card.classList.contains('flipped')) {
