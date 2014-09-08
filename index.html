@@ -40,45 +40,62 @@
 </head>
 <body>
 
-	<main>
-		<h1>¿Circulo hoy en DF?</h1>
+	<h1>¿Circulo hoy en DF?</h1>
 
-		<section id="setup" class="hidden">
-			<p>¿Cuales son los dígitos de tu placa?</p>
-			<input id="placa" type="number" min="0" max="9999" step="1" placeholder="4242" pattern="\d*"/>
-			<p>¿Qué número de holograma tienes?</p>
+	<div id="container">
+		
+		<div id="card">
+			<main class="side front">
+				<section id="setup" class="hidden">
+					<p>¿Cuales son los dígitos de tu placa?</p>
+					<input id="placa" type="number" min="0" max="9999" step="1" placeholder="4242" pattern="\d*"/>
+					<p>¿Qué número de holograma tienes?</p>
 
-			<ul id="hologramas">
-				<li class="holograma">
-					<label>
-						<input type="radio" name="holograma" value="0" />
-						Cero
-					</label>
-				</li>
-				<li class="holograma">
-					<label>
-						<input type="radio" name="holograma" value="1" />
-						1
-					</label>
-				</li>
-				<li class="holograma">
-					<label>
-						<input type="radio" name="holograma" value="2" />
-						2
-					</label>
-				</li>
-			</ul>
-			
-			<button id="guardar-placa">Listo</button>
-		</section>
+					<ul id="hologramas">
+						<li class="holograma">
+							<label>
+								<input type="radio" name="holograma" value="0" />
+								Cero
+							</label>
+						</li>
+						<li class="holograma">
+							<label>
+								<input type="radio" name="holograma" value="1" />
+								1
+							</label>
+						</li>
+						<li class="holograma">
+							<label>
+								<input type="radio" name="holograma" value="2" />
+								2
+							</label>
+						</li>
+					</ul>
+					
+					<button id="guardar-placa">Listo</button>
+				</section>
 
-		<section id="result" class="hidden">
-			<h2 id="hoy-circulo"></h2>
-			<span id="warn"></span>
-			<p id="razon"></p>
-			<a id="reset" href="#setup">Cambiar datos</a>
-		</section>
-	</main>
+				<section id="result" class="hidden">
+					<h2 id="hoy-circulo"></h2>
+					<span id="warn"></span>
+					<p id="razon"></p>
+
+					<div class="actions">
+					<a id="reset" href="#setup">Cambiar datos</a>
+				</section>
+				<a href="#switch" class="flippy">ayuda</a>
+			</main>
+
+			<div id="info" class="side back">
+				<a href="#switch" class="flippy">regresar</a>
+				<h2>¿Cómo sabes si circulo?</h2>
+				<p>Usamos la información de <a href="http://www.sedema.df.gob.mx" title="Secretaría del Medio Ambiente">SEDEMA</a> para calcular los días en los que tu automovil no circula, en función de la placa y holograma del mismo.</p>
+
+				<h2>¿Guardan los datos de mi auto?</h2>
+				<p><strong>No</strong>, ni se transmiten ni almacenan por nuestra parte, simplemente se guardan dentro de tu computadora o teléfono, y nosotros no tenemos acceso a los mismos.</p>
+			</div>
+		</div>
+	</div>
 
 	<footer>
 		<a href="http://surrealista.mx" title="Partido Surrealista Mexicano">
@@ -104,7 +121,7 @@
 		ga('send', 'pageview');
 	</script>
 
-</script>z
+</script>
 
 </body>
 </html>
