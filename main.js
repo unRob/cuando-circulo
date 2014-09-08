@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			return;
 		}
 
-		if (!holograma) {
+		if ([0,1,2].indexOf(holograma) < 0) {
 			alert("Es necesario que elijas el holograma de tu vehículo");
 			return;
 		}
