@@ -76,6 +76,14 @@ document.addEventListener('DOMContentLoaded', function(){
 		setup.classList.remove('hidden');
 	}
 
+	if (storage.placa) {
+		document.querySelector('#placa').value = storage.placa;
+	}
+
+	if (storage.holograma) {
+		document.querySelector('input[value="'+storage.holograma+'"]').checked = 'checked';
+	}
+
 	document.querySelector('#guardar-placa').addEventListener('mouseup', doSetup);
 	document.querySelector('#guardar-placa').addEventListener('touchend', doSetup);
 

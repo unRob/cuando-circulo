@@ -1,0 +1,14 @@
+CACHE MANIFEST
+# v0.0.1
+
+#JS
+lib/auto.js
+lib/circula.js
+lib/localizador.js
+lib/programa.js
+
+#HTML
+index.html
+
+#CSS
+main.css

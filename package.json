@@ -1,6 +1,6 @@
 {
   "name": "cuando-circulo",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "¿Cuándo circulo en DF?",
   "main": "main.js",
   "directories": {
@@ -9,14 +9,15 @@
   "scripts": {
     "test": "jasmine-node spec"
   },
+  "devDependencies" : {
+    "jasmine-node": "~> 1.14.5"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com:unrob/cuando-circulo.git"
   },
   "keywords": [
-    "hoy",
-    "no",
-    "circula",
+    "hoy no circula",
     "df",
     "mexico"
   ],
